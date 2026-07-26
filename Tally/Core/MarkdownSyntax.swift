@@ -12,13 +12,14 @@ import Foundation
 ///
 /// ## Kids
 /// - [ ] 2 pairs of socks @Alma✓ @Vidar
-/// - [x] Toothbrush @Alma
+/// - [x] Toothbrush @Alma✓
 /// - [ ] Sunscreen
 /// ```
 ///
-/// The leading `[ ]` / `[x]` box reflects the *whole* item, so it only reads `[x]` once
-/// every assignee is done. That keeps the file meaningful in any markdown viewer while
-/// still carrying the per-person detail.
+/// Every assignee always carries their own state, and the leading `[ ]` / `[x]` box
+/// summarises the item as a whole — so it only reads `[x]` once everyone is done. The box
+/// is redundant when there is a single assignee, but keeping both unconditional means the
+/// format has exactly one reading and round trips without special cases.
 public enum MarkdownSyntax {
     public static let doneMarker: Character = "✓"
     public static let mentionSigil: Character = "@"

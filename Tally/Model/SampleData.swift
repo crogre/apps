@@ -35,6 +35,8 @@ enum SampleData {
     ) -> Document {
         let people = PersonStore(context: context)
         let assignees = names.compactMap { people.findOrCreate(named: $0) }
+        // Settle the new people before anything looks them up again by name.
+        try? context.save()
 
         var draft = MarkdownParser.document(from: packingListMarkdown)
         // Every todo under a heading goes to both kids; the "Don't forget" items are the

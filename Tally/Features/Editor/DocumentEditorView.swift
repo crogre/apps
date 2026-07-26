@@ -11,10 +11,9 @@ struct DocumentEditorView: View {
 
     @State private var focusedBlockID: UUID?
     @State private var pendingCaretOffset: Int?
-    @State private var assigneeTarget: Block?
-    @State private var completerTarget: Block?
-    @State private var templateSource: Document?
-    @State private var isTitleFocused = false
+    /// One piece of state for every sheet: stacking several `.sheet` modifiers on the same
+    /// view is a well-known way to end up with one of them silently never presenting.
+    @State private var sheet: EditorSheet?
 
     /// The assignees most recently chosen in this note. New todos pick them up so a
     /// packing list where every item goes to both kids does not mean answering the same
@@ -45,27 +44,42 @@ struct DocumentEditorView: View {
         .navigationTitle(document.displayTitle)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar { toolbar }
-        .sheet(item: $assigneeTarget) { block in
-            AssigneePickerSheet(
-                initialSelection: block.people,
-                fallbackSelection: stickyAssignees
-            ) { people in
-                applyAssignees(people, to: block)
+        .sheet(item: $sheet) { destination in
+            switch destination {
+            case let .assignees(block):
+                AssigneePickerSheet(
+                    initialSelection: block.people,
+                    fallbackSelection: stickyAssignees
+                ) { people in
+                    applyAssignees(people, to: block)
+                }
+            case let .completer(block):
+                CompleterSheet(block: block)
+            case .template:
+                NewFromDocumentSheet(source: document) { _ in dismiss() }
             }
         }
-        .sheet(item: $completerTarget) { block in
-            CompleterSheet(block: block)
-        }
-        .sheet(item: $templateSource) { source in
-            NewFromDocumentSheet(source: source) { _ in dismiss() }
-        }
         .onAppear(perform: primeStickyAssignees)
+    }
+
+    private enum EditorSheet: Identifiable {
+        case assignees(Block)
+        case completer(Block)
+        case template
+
+        var id: String {
+            switch self {
+            case let .assignees(block): return "assignees-\(block.id)"
+            case let .completer(block): return "completer-\(block.id)"
+            case .template: return "template"
+            }
+        }
     }
 
     // MARK: - Rows
 
     private var titleField: some View {
-        TextField("Title", text: $document.title, axis: .vertical)
+        TextField("Title", text: $document.title)
             .font(.largeTitle.bold())
             .textInputAutocapitalization(.sentences)
             .listRowSeparator(.hidden)
@@ -85,7 +99,7 @@ struct DocumentEditorView: View {
             onInsertMultiline: { text, offset in handleMultiline(text, on: block, at: offset) },
             onTextChange: { text in applyTypingShortcut(to: block, text: text) },
             onTapCheckbox: { handleCheckboxTap(on: block) },
-            onEditAssignees: { assigneeTarget = block }
+            onEditAssignees: { sheet = .assignees(block) }
         )
     }
 
@@ -114,7 +128,7 @@ struct DocumentEditorView: View {
             Menu {
                 DocumentActionsMenu(
                     document: document,
-                    onUseAsTemplate: { templateSource = document },
+                    onUseAsTemplate: { sheet = .template },
                     onDelete: {
                         context.delete(document)
                         dismiss()
@@ -180,7 +194,7 @@ struct DocumentEditorView: View {
         Spacer()
 
         Button {
-            assigneeTarget = block
+            sheet = .assignees(block)
         } label: {
             Image(systemName: "person.badge.plus")
         }
@@ -246,7 +260,7 @@ struct DocumentEditorView: View {
                 commands.setAssignees(people, on: new)
                 for assignmentDraft in draft.assignments where assignmentDraft.isDone {
                     if let person = store.person(named: assignmentDraft.person.name) {
-                        new.assignment(for: person)?.completedAt = .now
+                        new.assignment(for: person)?.completedAt = Date.now
                     }
                 }
             }
@@ -281,7 +295,7 @@ struct DocumentEditorView: View {
     private func handleCheckboxTap(on block: Block) {
         if block.needsCompleterPrompt {
             // More than one person is on the item, so "who finished it?" is a real question.
-            completerTarget = block
+            sheet = .completer(block)
             return
         }
 
@@ -330,7 +344,7 @@ struct DocumentEditorView: View {
             break
         }
 
-        assigneeTarget = block
+        sheet = .assignees(block)
     }
 
     /// Opening a note that already has assignees should not start from a blank slate — the

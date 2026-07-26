@@ -49,11 +49,11 @@ final class TypingShortcutTests: XCTestCase {
     func testHeadingShortcuts() {
         XCTAssertEqual(
             TypingShortcut.match(text: "# Title", currentKind: .paragraph),
-            .init(kind: .heading1, remainingText: "Title")
+            TypingShortcut.Match(kind: .heading1, remainingText: "Title")
         )
         XCTAssertEqual(
             TypingShortcut.match(text: "### Deep", currentKind: .paragraph),
-            .init(kind: .heading3, remainingText: "Deep")
+            TypingShortcut.Match(kind: .heading3, remainingText: "Deep")
         )
     }
 
@@ -61,7 +61,7 @@ final class TypingShortcutTests: XCTestCase {
         for prefix in ["[] ", "[ ] ", "- [] ", "- [ ] "] {
             XCTAssertEqual(
                 TypingShortcut.match(text: prefix + "Socks", currentKind: .paragraph),
-                .init(kind: .todo, remainingText: "Socks"),
+                TypingShortcut.Match(kind: .todo, remainingText: "Socks"),
                 "failed for prefix \(prefix)"
             )
         }
@@ -70,14 +70,14 @@ final class TypingShortcutTests: XCTestCase {
     func testBulletShortcut() {
         XCTAssertEqual(
             TypingShortcut.match(text: "- Item", currentKind: .paragraph),
-            .init(kind: .bullet, remainingText: "Item")
+            TypingShortcut.Match(kind: .bullet, remainingText: "Item")
         )
     }
 
     func testBulletCanBecomeATodo() {
         XCTAssertEqual(
             TypingShortcut.match(text: "[] Socks", currentKind: .bullet),
-            .init(kind: .todo, remainingText: "Socks")
+            TypingShortcut.Match(kind: .todo, remainingText: "Socks")
         )
     }
 
@@ -88,7 +88,7 @@ final class TypingShortcutTests: XCTestCase {
     func testDividerShortcut() {
         XCTAssertEqual(
             TypingShortcut.match(text: "---", currentKind: .paragraph),
-            .init(kind: .divider, remainingText: "")
+            TypingShortcut.Match(kind: .divider, remainingText: "")
         )
     }
 

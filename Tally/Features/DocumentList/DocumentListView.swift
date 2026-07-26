@@ -8,12 +8,26 @@ struct DocumentListView: View {
 
     @State private var path: [Document] = []
     @State private var searchText = ""
-    @State private var templateSource: Document?
     @State private var documentPendingDeletion: Document?
-    @State private var showingPeople = false
-    @State private var showingSettings = false
     @State private var showingImporter = false
     @State private var importError: String?
+    /// One piece of state for every sheet: stacking several `.sheet` modifiers on the same
+    /// view is a well-known way to end up with one of them silently never presenting.
+    @State private var sheet: ListSheet?
+
+    private enum ListSheet: Identifiable {
+        case newFrom(Document)
+        case people
+        case settings
+
+        var id: String {
+            switch self {
+            case let .newFrom(document): return "newFrom-\(document.id)"
+            case .people: return "people"
+            case .settings: return "settings"
+            }
+        }
+    }
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -30,16 +44,17 @@ struct DocumentListView: View {
             .navigationDestination(for: Document.self) { document in
                 DocumentEditorView(document: document)
             }
-            .sheet(item: $templateSource) { source in
-                NewFromDocumentSheet(source: source) { newDocument in
-                    path.append(newDocument)
+            .sheet(item: $sheet) { destination in
+                switch destination {
+                case let .newFrom(source):
+                    NewFromDocumentSheet(source: source) { newDocument in
+                        path.append(newDocument)
+                    }
+                case .people:
+                    NavigationStack { PeopleManagerView() }
+                case .settings:
+                    NavigationStack { SettingsView() }
                 }
-            }
-            .sheet(isPresented: $showingPeople) {
-                NavigationStack { PeopleManagerView() }
-            }
-            .sheet(isPresented: $showingSettings) {
-                NavigationStack { SettingsView() }
             }
             .fileImporter(
                 isPresented: $showingImporter,
@@ -114,7 +129,7 @@ struct DocumentListView: View {
         }
         .swipeActions(edge: .leading) {
             Button {
-                templateSource = document
+                sheet = .newFrom(document)
             } label: {
                 Label("New from this", systemImage: "doc.on.doc")
             }
@@ -123,7 +138,7 @@ struct DocumentListView: View {
         .contextMenu {
             DocumentActionsMenu(
                 document: document,
-                onUseAsTemplate: { templateSource = document },
+                onUseAsTemplate: { sheet = .newFrom(document) },
                 onDelete: { documentPendingDeletion = document }
             )
         }
@@ -145,7 +160,7 @@ struct DocumentListView: View {
         ToolbarItem(placement: .topBarLeading) {
             Menu {
                 Button {
-                    showingPeople = true
+                    sheet = .people
                 } label: {
                     Label("People", systemImage: "person.2")
                 }
@@ -155,7 +170,7 @@ struct DocumentListView: View {
                     Label("Import Markdown…", systemImage: "square.and.arrow.down")
                 }
                 Button {
-                    showingSettings = true
+                    sheet = .settings
                 } label: {
                     Label("Settings", systemImage: "gearshape")
                 }

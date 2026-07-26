@@ -34,7 +34,7 @@ final class MarkdownTests: XCTestCase {
         ## Kids
 
         - [ ] 2 pairs of socks @Alma✓ @Vidar
-        - [x] Toothbrush @Alma
+        - [x] Toothbrush @Alma✓
         - [ ] Sunscreen
         """
         XCTAssertEqual(MarkdownSerializer.markdown(for: packingList()), expected)

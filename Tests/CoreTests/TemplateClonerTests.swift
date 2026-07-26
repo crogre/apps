@@ -33,7 +33,9 @@ final class TemplateClonerTests: XCTestCase {
         XCTAssertEqual(clone.blocks.map(\.text), source.blocks.map(\.text))
         XCTAssertEqual(clone.completedTodoCount, 0)
         XCTAssertTrue(clone.blocks.allSatisfy { !$0.isDoneSolo })
-        XCTAssertTrue(clone.blocks.allSatisfy { $0.assignments.allSatisfy { !$0.isDone } })
+        XCTAssertTrue(clone.blocks.allSatisfy { block in
+            block.assignments.allSatisfy { assignment in !assignment.isDone }
+        })
     }
 
     func testCloneKeepsAssigneesByDefault() {

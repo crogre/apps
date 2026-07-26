@@ -116,14 +116,18 @@ to-do line, and a trailing `✓` marks the ones who are already done.
 ## Kids
 
 - [ ] 2 pairs of socks @Alma✓ @Vidar
-- [x] Toothbrush @Alma
+- [x] Toothbrush @Alma✓
 - [ ] Sunscreen
 ```
 
-The leading box summarises the whole item, so it only reads `[x]` once every assignee is
-done — which keeps the file honest in any markdown viewer while still carrying the
-per-person detail. Names with spaces are bracketed: `@[Alma Svensson]`. A mention only
-counts at the end of a line, so `- [ ] Mail teacher@school.se` stays text.
+Every assignee always carries their own mark, and the leading box summarises the item as a
+whole — so it only reads `[x]` once everyone is done. That keeps the file honest in any
+markdown viewer while still carrying the per-person detail. Names with spaces are
+bracketed: `@[Alma Svensson]`. A mention only counts at the end of a line, so
+`- [ ] Mail teacher@school.se` stays text.
+
+If a hand-written file disagrees with itself — `- [x] Socks @Alma✓ @Vidar` — the
+per-person marks win, because they are the more specific statement.
 
 Round trips are content-preserving, with two documented exceptions: the first `# heading`
 becomes the note's title, and blank paragraphs used purely as editor spacing are dropped.

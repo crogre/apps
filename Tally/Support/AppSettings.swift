@@ -1,11 +1,9 @@
 import SwiftUI
 
 enum AppSettingsKey {
-    /// Whether creating a todo should offer the assignee sheet straight away.
+    /// How eagerly creating a to-do should offer the assignee sheet. Stores the raw value
+    /// of `AssigneePromptMode`.
     static let promptForAssignees = "promptForAssigneesOnNewTodo"
-    /// Move completed items to the bottom of their section.
-    static let sinkCompletedItems = "sinkCompletedItems"
-    static let hasSeeded = "hasSeededSampleData"
 }
 
 extension View {
