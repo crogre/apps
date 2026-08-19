@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="incline-finder" xmlns="http://www.topografix.com/GPX/1/1">
+<trk>
+<name>Fabriksgatan → Krokslättsgatan → Klintegatan → Krokslätts Storgata — 1000 m @ 5.1%</name>
+<trkseg>
+<trkpt lat="57.674486" lon="12.006047"><ele>7.1</ele></trkpt>
+<trkpt lat="57.674782" lon="12.005812"><ele>8.7</ele></trkpt>
+<trkpt lat="57.674671" lon="12.005242"><ele>5.4</ele></trkpt>
+<trkpt lat="57.674508" lon="12.004438"><ele>6.9</ele></trkpt>
+<trkpt lat="57.674366" lon="12.003888"><ele>7.0</ele></trkpt>
+<trkpt lat="57.674197" lon="12.003291"><ele>9.5</ele></trkpt>
+<trkpt lat="57.674085" lon="12.002823"><ele>10.8</ele></trkpt>
+<trkpt lat="57.673974" lon="12.002398"><ele>14.4</ele></trkpt>
+<trkpt lat="57.673792" lon="12.001823"><ele>20.5</ele></trkpt>
+<trkpt lat="57.673607" lon="12.001320"><ele>22.3</ele></trkpt>
+<trkpt lat="57.673507" lon="12.001031"><ele>23.5</ele></trkpt>
+<trkpt lat="57.673298" lon="12.000424"><ele>25.7</ele></trkpt>
+<trkpt lat="57.673014" lon="11.999642"><ele>29.0</ele></trkpt>
+<trkpt lat="57.672879" lon="11.999269"><ele>31.9</ele></trkpt>
+<trkpt lat="57.672797" lon="11.998848"><ele>33.5</ele></trkpt>
+<trkpt lat="57.672697" lon="11.998189"><ele>34.5</ele></trkpt>
+<trkpt lat="57.672655" lon="11.997710"><ele>36.5</ele></trkpt>
+<trkpt lat="57.672724" lon="11.997265"><ele>39.5</ele></trkpt>
+<trkpt lat="57.672859" lon="11.996894"><ele>39.5</ele></trkpt>
+<trkpt lat="57.673095" lon="11.996611"><ele>40.0</ele></trkpt>
+<trkpt lat="57.673430" lon="11.996013"><ele>41.9</ele></trkpt>
+<trkpt lat="57.673528" lon="11.995546"><ele>43.3</ele></trkpt>
+<trkpt lat="57.673674" lon="11.994779"><ele>51.3</ele></trkpt>
+<trkpt lat="57.673829" lon="11.993969"><ele>50.0</ele></trkpt>
+<trkpt lat="57.673293" lon="11.993273"><ele>57.5</ele></trkpt>
+<trkpt lat="57.673252" lon="11.992791"><ele>58.9</ele></trkpt>
+<trkpt lat="57.673137" lon="11.992355"><ele>57.2</ele></trkpt>
+<trkpt lat="57.673011" lon="11.992724"><ele>60.5</ele></trkpt>
+</trkseg>
+</trk>
+</gpx>

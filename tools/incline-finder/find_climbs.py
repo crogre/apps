@@ -356,12 +356,15 @@ def best_window(graph: Graph, nodes: list[int], args) -> Climb | None:
 def find_climbs(graph: Graph, args) -> list[Climb]:
     """Walk uphill corridors over the contracted graph, then trim each to its best window."""
     chains = contract(graph)
+    # Work outward from the point of interest, so a capped sweep spends its budget
+    # on the neighbourhood that was actually asked about.
+    starts = sorted(chains, key=lambda n: haversine(args.lat, args.lon, *graph.coord[n]))
     # One corridor per (start, end) pair - a grid of streets otherwise yields
     # exponentially many zig-zags that all trim to the same climb.
     walks: dict[tuple[int, int], tuple[float, list[int], list[str]]] = {}
     total_steps = 0
 
-    for start in chains:
+    for start in starts:
         if start not in graph.elev:
             continue
         # stack items: (node, path nodes, length, highest elevation so far, road names)

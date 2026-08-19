@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="incline-finder" xmlns="http://www.topografix.com/GPX/1/1">
+<trk>
+<name>Askims Granstig → Askims Svedjeväg → Gamla Särövägen → Högabergsvägen — 939 m @ 4.8%</name>
+<trkseg>
+<trkpt lat="57.629231" lon="11.942119"><ele>27.9</ele></trkpt>
+<trkpt lat="57.628994" lon="11.942248"><ele>28.1</ele></trkpt>
+<trkpt lat="57.628749" lon="11.942409"><ele>30.0</ele></trkpt>
+<trkpt lat="57.628442" lon="11.942694"><ele>30.5</ele></trkpt>
+<trkpt lat="57.628048" lon="11.943071"><ele>33.6</ele></trkpt>
+<trkpt lat="57.627938" lon="11.943566"><ele>41.6</ele></trkpt>
+<trkpt lat="57.627877" lon="11.944063"><ele>42.1</ele></trkpt>
+<trkpt lat="57.627897" lon="11.944470"><ele>43.0</ele></trkpt>
+<trkpt lat="57.628060" lon="11.944370"><ele>42.8</ele></trkpt>
+<trkpt lat="57.628404" lon="11.944206"><ele>43.4</ele></trkpt>
+<trkpt lat="57.628667" lon="11.944156"><ele>45.2</ele></trkpt>
+<trkpt lat="57.629027" lon="11.944094"><ele>45.3</ele></trkpt>
+<trkpt lat="57.629064" lon="11.944511"><ele>47.8</ele></trkpt>
+<trkpt lat="57.629137" lon="11.945250"><ele>50.1</ele></trkpt>
+<trkpt lat="57.629235" lon="11.946244"><ele>51.3</ele></trkpt>
+<trkpt lat="57.629242" lon="11.946317"><ele>51.3</ele></trkpt>
+<trkpt lat="57.628897" lon="11.946429"><ele>49.5</ele></trkpt>
+<trkpt lat="57.628615" lon="11.946527"><ele>51.1</ele></trkpt>
+<trkpt lat="57.628413" lon="11.946736"><ele>53.8</ele></trkpt>
+<trkpt lat="57.628292" lon="11.947194"><ele>56.4</ele></trkpt>
+<trkpt lat="57.628308" lon="11.947655"><ele>59.3</ele></trkpt>
+<trkpt lat="57.628353" lon="11.948125"><ele>60.7</ele></trkpt>
+<trkpt lat="57.628397" lon="11.948767"><ele>61.2</ele></trkpt>
+<trkpt lat="57.628165" lon="11.948890"><ele>61.9</ele></trkpt>
+<trkpt lat="57.627948" lon="11.949022"><ele>64.3</ele></trkpt>
+<trkpt lat="57.627720" lon="11.949274"><ele>64.0</ele></trkpt>
+<trkpt lat="57.627648" lon="11.949683"><ele>67.1</ele></trkpt>
+<trkpt lat="57.627695" lon="11.950134"><ele>67.4</ele></trkpt>
+<trkpt lat="57.627784" lon="11.950585"><ele>68.5</ele></trkpt>
+<trkpt lat="57.627944" lon="11.951467"><ele>71.5</ele></trkpt>
+<trkpt lat="57.627895" lon="11.951499"><ele>74.8</ele></trkpt>
+</trkseg>
+</trk>
+</gpx>

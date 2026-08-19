@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="incline-finder" xmlns="http://www.topografix.com/GPX/1/1">
+<trk>
+<name>Toltorpsgatan → Ehrenströmsgatan → (footway) → Södermalmsgatan — 989 m @ 5.0%</name>
+<trkseg>
+<trkpt lat="57.674725" lon="11.976358"><ele>45.3</ele></trkpt>
+<trkpt lat="57.675036" lon="11.975754"><ele>45.9</ele></trkpt>
+<trkpt lat="57.675404" lon="11.975025"><ele>45.5</ele></trkpt>
+<trkpt lat="57.675697" lon="11.974452"><ele>52.4</ele></trkpt>
+<trkpt lat="57.675911" lon="11.974022"><ele>49.9</ele></trkpt>
+<trkpt lat="57.676186" lon="11.973466"><ele>53.4</ele></trkpt>
+<trkpt lat="57.676357" lon="11.973119"><ele>52.6</ele></trkpt>
+<trkpt lat="57.676570" lon="11.972690"><ele>53.7</ele></trkpt>
+<trkpt lat="57.676797" lon="11.972236"><ele>55.1</ele></trkpt>
+<trkpt lat="57.677129" lon="11.971585"><ele>62.2</ele></trkpt>
+<trkpt lat="57.677297" lon="11.971284"><ele>61.2</ele></trkpt>
+<trkpt lat="57.677587" lon="11.970814"><ele>70.5</ele></trkpt>
+<trkpt lat="57.677791" lon="11.970553"><ele>72.5</ele></trkpt>
+<trkpt lat="57.678014" lon="11.970292"><ele>68.1</ele></trkpt>
+<trkpt lat="57.678272" lon="11.969987"><ele>63.9</ele></trkpt>
+<trkpt lat="57.678293" lon="11.969724"><ele>66.3</ele></trkpt>
+<trkpt lat="57.678075" lon="11.969677"><ele>78.2</ele></trkpt>
+<trkpt lat="57.677800" lon="11.969956"><ele>81.3</ele></trkpt>
+<trkpt lat="57.677560" lon="11.970064"><ele>81.1</ele></trkpt>
+<trkpt lat="57.677340" lon="11.970103"><ele>78.9</ele></trkpt>
+<trkpt lat="57.677114" lon="11.969920"><ele>78.9</ele></trkpt>
+<trkpt lat="57.676876" lon="11.969782"><ele>91.5</ele></trkpt>
+<trkpt lat="57.676538" lon="11.969913"><ele>87.7</ele></trkpt>
+<trkpt lat="57.676157" lon="11.970068"><ele>94.9</ele></trkpt>
+<trkpt lat="57.676010" lon="11.970096"><ele>94.9</ele></trkpt>
+<trkpt lat="57.675688" lon="11.970080"><ele>96.5</ele></trkpt>
+<trkpt lat="57.675378" lon="11.970039"><ele>96.4</ele></trkpt>
+<trkpt lat="57.675042" lon="11.970004"><ele>93.1</ele></trkpt>
+<trkpt lat="57.674836" lon="11.970005"><ele>92.5</ele></trkpt>
+<trkpt lat="57.674575" lon="11.970028"><ele>95.7</ele></trkpt>
+</trkseg>
+</trk>
+</gpx>

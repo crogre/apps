@@ -1,0 +1,268 @@
+<title>Eklanda Hage Climbs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --paper:#eaefec; --surface:#f7faf8; --line:#c9d6cf; --ink:#0f1a17; --muted:#55665f;
+  --teal:#0d6a5a; --teal-soft:#0d6a5a1f; --contour:#9a6a3c; --rust:#a8492a;
+  --b1:#cbdcd4; --b2:#93c3b4; --b3:#3d9581; --b4:#0d6a5a; --b5:#a8492a;
+  --sans:"Familjen Grotesk",system-ui,sans-serif;
+  --serif:"Source Serif 4",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper:#0c1412; --surface:#131d1a; --line:#25332e; --ink:#e3ebe6; --muted:#94a69e;
+    --teal:#4cc0a4; --teal-soft:#4cc0a422; --contour:#c08b57; --rust:#e0724a;
+    --b1:#2c4740; --b2:#3f7f6e; --b3:#4cc0a4; --b4:#7ddcc2; --b5:#e0724a;
+  }
+}
+:root[data-theme="dark"] {
+  --paper:#0c1412; --surface:#131d1a; --line:#25332e; --ink:#e3ebe6; --muted:#94a69e;
+  --teal:#4cc0a4; --teal-soft:#4cc0a422; --contour:#c08b57; --rust:#e0724a;
+  --b1:#2c4740; --b2:#3f7f6e; --b3:#4cc0a4; --b4:#7ddcc2; --b5:#e0724a;
+}
+* { box-sizing:border-box; }
+body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--serif);
+  font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased; }
+.wrap { max-width:860px; margin:0 auto; padding:clamp(28px,5vw,64px) clamp(18px,4vw,32px) 80px;
+  display:flex; flex-direction:column; gap:44px; }
+h1,h2,h3 { font-family:var(--sans); text-wrap:balance; margin:0; letter-spacing:-0.01em; }
+h1 { font-size:clamp(34px,6vw,52px); font-weight:700; line-height:1.05; }
+h2 { font-size:22px; font-weight:600; }
+h3 { font-size:21px; font-weight:600; }
+p { margin:0; }
+a { color:var(--teal); text-underline-offset:3px; }
+.eyebrow { font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--muted); }
+.lede { font-size:20px; color:var(--muted); max-width:62ch; }
+header.top { display:flex; flex-direction:column; gap:14px; }
+.verdict { background:var(--surface); border:1px solid var(--line); border-radius:3px;
+  padding:22px 24px; display:flex; flex-direction:column; gap:10px; }
+.verdict .big { font-family:var(--sans); font-size:clamp(24px,4vw,32px); font-weight:600;
+  line-height:1.2; }
+.verdict .big b { color:var(--teal); font-weight:600; }
+section { display:flex; flex-direction:column; gap:18px; }
+.climb { background:var(--surface); border:1px solid var(--line); border-radius:3px;
+  padding:22px 24px 18px; display:flex; flex-direction:column; gap:16px; }
+.ch { display:flex; align-items:flex-start; gap:16px; }
+.ch > div { flex:1; min-width:0; }
+.num { font-family:var(--mono); font-size:13px; color:var(--paper); background:var(--teal);
+  width:26px; height:26px; border-radius:50%; display:grid; place-items:center; flex:none;
+  margin-top:3px; }
+.ends { font-family:var(--mono); font-size:12.5px; color:var(--muted); margin-top:4px; }
+.arrow { color:var(--teal); }
+.away { font-family:var(--sans); text-align:right; font-size:12px; color:var(--muted);
+  display:flex; flex-direction:column; line-height:1.25; flex:none; }
+.away b { font-size:18px; color:var(--ink); font-weight:600; }
+.stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(112px,1fr)); gap:12px 8px;
+  margin:0; padding:14px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.stats div { display:flex; flex-direction:column; gap:2px; }
+dt { font-family:var(--mono); font-size:10.5px; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--muted); }
+dd { margin:0; font-family:var(--sans); font-size:19px; font-weight:500;
+  font-variant-numeric:tabular-nums; }
+dd.hi { color:var(--teal); }
+svg.prof, svg.loc { width:100%; height:auto; display:block; overflow:visible; }
+.grid { stroke:var(--line); stroke-width:1; }
+.gl { font-family:var(--mono); font-size:9px; fill:var(--muted); }
+.fill { fill:var(--teal-soft); }
+.cop { fill:none; stroke:var(--teal); stroke-width:2.2; stroke-linejoin:round; }
+.terr { fill:none; stroke:var(--contour); stroke-width:1.3; stroke-dasharray:1 3;
+  stroke-linecap:round; }
+.ideal { fill:none; stroke:var(--muted); stroke-width:1; stroke-dasharray:7 5; opacity:.75; }
+.bands { display:flex; gap:2px; height:26px; }
+.band { display:grid; place-items:center; border-radius:1px; font-family:var(--mono);
+  font-size:9.5px; color:#08110e; }
+.band span { opacity:.85; }
+.b1{background:var(--b1)} .b2{background:var(--b2)} .b3{background:var(--b3)}
+.b4{background:var(--b4)} .b5{background:var(--b5)}
+.legend { font-family:var(--mono); font-size:11px; color:var(--muted); display:flex;
+  flex-wrap:wrap; align-items:center; gap:6px; }
+.k { width:16px; height:0; border-top-width:2.4px; border-top-style:solid; display:inline-block;
+  margin-right:2px; }
+.k.cop { border-color:var(--teal); }
+.k.terr { border-color:var(--contour); border-top-style:dotted; }
+.k.ideal { border-color:var(--muted); border-top-style:dashed; }
+.ring { fill:none; stroke:var(--line); stroke-width:1; stroke-dasharray:3 4; }
+.route { fill:none; stroke:var(--teal); stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+.route.r3, .route.r4, .route.r5 { opacity:.55; }
+.dot { fill:var(--surface); stroke:var(--teal); stroke-width:1.5; }
+.rank { font-family:var(--mono); font-size:11px; fill:var(--ink); }
+.home { fill:var(--rust); }
+.homelab { font-family:var(--mono); font-size:11px; fill:var(--rust); letter-spacing:.06em; }
+.note { color:var(--muted); font-size:15.5px; max-width:64ch; }
+.method { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px; }
+.method div { display:flex; flex-direction:column; gap:5px; }
+.method h4 { font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--muted); margin:0; font-weight:400; }
+.method p { font-size:15px; }
+.rm { font-family:var(--mono); font-size:11px; color:var(--muted); }
+hr { border:none; border-top:1px solid var(--line); margin:0; }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <p class="eyebrow">Mölndal · OpenStreetMap + 2 elevation models</p>
+    <h1>A kilometre at five per cent</h1>
+    <p class="lede">Every road within 4 km of Eklanda Hage, walked uphill and measured against
+      two independent elevation models. Five climbs come close to the target; one is almost
+      exactly it.</p>
+  </header>
+
+  <div class="verdict">
+    <p class="eyebrow">Closest to the brief</p>
+    <p class="big"><b>Sisjövägen</b> — 995 m at 5.0 %, 50 m of climbing, on one road with no
+      turns, 2.0 km from your door.</p>
+    <p class="note">From the Datavägen/Knapegårdsvägen junction at 14 m, south-east and up to
+      65 m. Both elevation models agree to within 0.25 percentage points, and a separated
+      cycle path runs alongside the whole length.</p>
+  </div>
+
+  <section>
+    <h2>Where they are</h2>
+    <p class="note">Rings at 1, 2 and 3 km from Eklanda Hage. Nothing inside 2 km holds a steady
+      5 % for a kilometre — the closest candidate, the service road up Västra Eklanda Höjd at
+      625 m, is steeper in one model than the other and flattens in its middle third.</p>
+    <svg viewBox="0 0 720 420" class="loc" role="img" aria-label="Locator map of the five climbs around Eklanda Hage"><circle class="ring" cx="360.0" cy="210.0" r="49.4"/><text class="gl" x="364.0" y="172.6">1 km</text><circle class="ring" cx="360.0" cy="210.0" r="98.8"/><text class="gl" x="364.0" y="123.2">2 km</text><circle class="ring" cx="360.0" cy="210.0" r="148.2"/><text class="gl" x="364.0" y="73.8">3 km</text><path class="route r1" d="M306.7 306.4 L307.4 305.9 L309.3 307.5 L311.2 309.5 L313.0 311.1 L314.8 312.7 L316.4 314.0 L317.9 315.1 L319.6 316.2 L322.2 317.4 L324.5 318.2 L326.2 318.7 L328.9 319.3 L331.6 319.7 L335.4 319.9 L339.4 320.0 L342.8 320.1 L345.5 320.2 L348.4 320.4 L350.8 320.8 L352.9 321.5 L355.6 322.7 L357.0 323.8 L357.4 324.2 L360.6 328.5 L361.6 329.7 L362.9 331.2 L364.1 332.4 L365.2 333.6 L367.6 336.0"/><circle class="dot" cx="339.4" cy="320.0" r="11"/><text class="rank" x="339.4" y="324.0" text-anchor="middle">1</text><path class="route r2" d="M440.1 107.7 L436.9 106.0 L432.9 104.0 L429.8 102.4 L427.5 101.2 L424.5 99.7 L422.6 98.7 L420.3 97.6 L417.9 96.3 L414.4 94.5 L412.8 93.6 L410.2 92.0 L408.8 90.9 L407.4 89.6 L405.8 88.2 L404.3 88.1 L404.1 89.3 L405.6 90.8 L406.2 92.1 L406.4 93.3 L405.4 94.6 L404.7 95.9 L405.4 97.8 L406.2 99.8 L406.3 100.7 L406.3 102.4 L406.0 104.1 L405.9 106.0 L405.9 107.1 L406.0 108.5"/><circle class="dot" cx="404.3" cy="88.1" r="11"/><text class="rank" x="404.3" y="92.1" text-anchor="middle">2</text><path class="route r3" d="M209.4 144.1 L198.0 144.3 L190.0 144.2 L185.4 144.0 L182.0 143.9 L179.5 143.9 L177.2 144.4 L175.3 145.7 L173.8 146.8 L171.6 147.8 L169.1 147.8 L167.2 147.0 L166.5 146.6 L164.9 145.1 L163.0 144.1 L162.5 144.0 L159.8 143.8 L157.6 144.3 L157.0 144.6 L155.6 145.6 L154.7 146.9 L154.7 148.1 L155.2 149.4 L154.3 149.5 L152.3 149.0 L151.2 147.7 L150.1 146.2 L148.6 144.7 L146.8 144.0 L144.2 143.7 L141.0 143.7"/><circle class="dot" cx="162.5" cy="144.0" r="11"/><text class="rank" x="162.5" y="148.0" text-anchor="middle">3</text><path class="route r4" d="M600.2 109.0 L598.9 107.4 L595.9 108.0 L591.5 108.9 L588.6 109.7 L585.3 110.6 L582.8 111.2 L580.5 111.8 L577.4 112.9 L574.7 113.9 L573.2 114.4 L569.9 115.6 L565.7 117.1 L563.7 117.9 L561.4 118.3 L557.8 118.9 L555.2 119.1 L552.8 118.7 L550.8 118.0 L549.3 116.7 L546.1 114.8 L543.6 114.3 L539.4 113.5 L535.1 112.6 L531.3 115.6 L528.7 115.8 L526.4 116.5 L528.4 117.1"/><circle class="dot" cx="561.4" cy="118.3" r="11"/><text class="rank" x="561.4" y="122.3" text-anchor="middle">4</text><path class="route r5" d="M255.5 357.8 L256.2 359.1 L257.1 360.5 L258.6 362.2 L260.6 364.3 L263.3 364.9 L266.0 365.3 L268.2 365.2 L267.6 364.3 L266.8 362.4 L266.5 360.9 L266.1 358.9 L268.4 358.7 L272.4 358.3 L277.7 357.8 L278.1 357.8 L278.7 359.7 L279.3 361.2 L280.4 362.3 L282.9 363.0 L285.3 362.9 L287.9 362.6 L291.3 362.4 L292.0 363.7 L292.7 364.9 L294.1 366.1 L296.3 366.5 L298.7 366.3 L301.1 365.8 L305.9 364.9 L306.1 365.2"/><circle class="dot" cx="278.1" cy="357.8" r="11"/><text class="rank" x="278.1" y="361.8" text-anchor="middle">5</text><circle class="home" cx="360.0" cy="210.0" r="5"/><text class="homelab" x="360.0" y="196.0" text-anchor="middle">Eklanda Hage</text></svg>
+  </section>
+
+  <section>
+    <h2>The five</h2>
+    
+<article class="climb">
+  <header class="ch">
+    <span class="num">1</span>
+    <div>
+      <h3>Sisjövägen</h3>
+      <p class="ends">Datavägen/Knapegårdsvägen junction <span class="arrow">↗</span> crest above Sisjön</p>
+    </div>
+    <p class="away"><b>2.0 km</b><span>from Eklanda Hage</span></p>
+  </header>
+  <dl class="stats">
+    <div><dt>Length</dt><dd>995 m</dd></div>
+    <div><dt>Gain</dt><dd>50 m</dd></div>
+    <div><dt>Average</dt><dd class="hi">5.04 %</dd></div>
+    <div><dt>Elevation</dt><dd>14→65 m</dd></div>
+    <div><dt>Pulling ≥3 %</dt><dd>78 % of it</dd></div>
+    <div><dt>Two DEMs</dt><dd>5.16 / 4.93 %</dd></div>
+  </dl>
+  <svg viewBox="0 0 720 168" class="prof" role="img" aria-label="Elevation profile: 995 metres climbing 50 metres"><line class="grid" x1="46" y1="130.0" x2="708" y2="130.0"/><text class="gl" x="38" y="133.5">10</text><line class="grid" x1="46" y1="112.0" x2="708" y2="112.0"/><text class="gl" x="38" y="115.5">20</text><line class="grid" x1="46" y1="94.0" x2="708" y2="94.0"/><text class="gl" x="38" y="97.5">30</text><line class="grid" x1="46" y1="76.0" x2="708" y2="76.0"/><text class="gl" x="38" y="79.5">40</text><line class="grid" x1="46" y1="58.0" x2="708" y2="58.0"/><text class="gl" x="38" y="61.5">50</text><line class="grid" x1="46" y1="40.0" x2="708" y2="40.0"/><text class="gl" x="38" y="43.5">60</text><line class="grid" x1="46" y1="22.0" x2="708" y2="22.0"/><text class="gl" x="38" y="25.5">70</text><path class="fill" d="M46.0 122.6 L71.9 120.2 L95.2 113.6 L119.2 103.3 L145.1 92.7 L169.1 85.9 L191.7 83.9 L220.3 81.0 L245.6 76.0 L265.6 75.1 L286.2 76.3 L307.5 75.6 L328.1 73.1 L350.1 67.5 L371.3 61.1 L395.3 58.5 L423.9 59.8 L445.2 60.3 L472.5 58.5 L499.1 57.8 L525.0 56.6 L545.0 53.5 L565.6 47.9 L586.9 45.0 L612.2 44.0 L634.1 40.6 L661.4 35.7 L685.4 31.7 L708.0 30.3 L708.0 134.0 L46.0 134.0 Z"/><path class="ideal" d="M46.0 122.6 L708.0 33.1"/><path class="terr" d="M46.0 115.6 L71.9 114.1 L95.2 110.0 L119.2 103.7 L145.1 96.3 L169.1 90.7 L191.7 86.8 L220.3 83.2 L245.6 80.7 L265.6 79.0 L286.2 78.0 L307.5 76.5 L328.1 74.9 L350.1 72.6 L371.3 69.5 L395.3 66.5 L423.9 64.3 L445.2 63.9 L472.5 65.0 L499.1 65.7 L525.0 64.7 L545.0 60.7 L565.6 54.9 L586.9 48.6 L612.2 42.9 L634.1 38.0 L661.4 33.7 L685.4 29.9 L708.0 27.4"/><path class="cop" d="M46.0 122.6 L71.9 120.2 L95.2 113.6 L119.2 103.3 L145.1 92.7 L169.1 85.9 L191.7 83.9 L220.3 81.0 L245.6 76.0 L265.6 75.1 L286.2 76.3 L307.5 75.6 L328.1 73.1 L350.1 67.5 L371.3 61.1 L395.3 58.5 L423.9 59.8 L445.2 60.3 L472.5 58.5 L499.1 57.8 L525.0 56.6 L545.0 53.5 L565.6 47.9 L586.9 45.0 L612.2 44.0 L634.1 40.6 L661.4 35.7 L685.4 31.7 L708.0 30.3"/><text class="gl" x="46.0" y="152" text-anchor="middle">0</text><text class="gl" x="212.3" y="152" text-anchor="middle">0.2</text><text class="gl" x="378.7" y="152" text-anchor="middle">0.5</text><text class="gl" x="545.0" y="152" text-anchor="middle">0.7</text><text class="gl" x="708" y="152" text-anchor="end">km</text></svg>
+  <div class="bands" aria-label="gradient per 100 metres"><div class="band b4" style="flex:100"><span>7.9</span></div><div class="band b5" style="flex:100"><span>9.9</span></div><div class="band b3" style="flex:100"><span>4.6</span></div><div class="band b1" style="flex:100"><span>1.4</span></div><div class="band b4" style="flex:100"><span>6.3</span></div><div class="band b1" style="flex:100"><span>0.6</span></div><div class="band b1" style="flex:100"><span>0.4</span></div><div class="band b4" style="flex:100"><span>7.7</span></div><div class="band b4" style="flex:100"><span>6.2</span></div><div class="band b3" style="flex:95"><span>4.8</span></div></div>
+  <p class="legend"><span class="k cop"></span>Copernicus GLO-30 <span class="k terr"></span>AWS terrain
+     <span class="k ideal"></span>a true 5 % ramp · strip shows gradient per 100 m
+     · <a href="https://www.google.com/maps/dir/57.63859,11.95161/57.63319,11.96290/data=!4m2!4m1!3e1">route in Google Maps</a></p>
+</article>
+<article class="climb">
+  <header class="ch">
+    <span class="num">2</span>
+    <div>
+      <h3>Toltorpsgatan → Södermalmsgatan</h3>
+      <p class="ends">Toltorpsdalen <span class="arrow">↗</span> Södermalmsbrinken / Konstnärsgatan</p>
+    </div>
+    <p class="away"><b>2.2 km</b><span>from Eklanda Hage</span></p>
+  </header>
+  <dl class="stats">
+    <div><dt>Length</dt><dd>989 m</dd></div>
+    <div><dt>Gain</dt><dd>49 m</dd></div>
+    <div><dt>Average</dt><dd class="hi">5.00 %</dd></div>
+    <div><dt>Elevation</dt><dd>46→94 m</dd></div>
+    <div><dt>Pulling ≥3 %</dt><dd>78 % of it</dd></div>
+    <div><dt>Two DEMs</dt><dd>4.94 / 5.05 %</dd></div>
+  </dl>
+  <svg viewBox="0 0 720 168" class="prof" role="img" aria-label="Elevation profile: 989 metres climbing 49 metres"><line class="grid" x1="46" y1="132.1" x2="708" y2="132.1"/><text class="gl" x="38" y="135.6">40</text><line class="grid" x1="46" y1="114.8" x2="708" y2="114.8"/><text class="gl" x="38" y="118.3">50</text><line class="grid" x1="46" y1="97.4" x2="708" y2="97.4"/><text class="gl" x="38" y="100.9">60</text><line class="grid" x1="46" y1="80.1" x2="708" y2="80.1"/><text class="gl" x="38" y="83.6">70</text><line class="grid" x1="46" y1="62.8" x2="708" y2="62.8"/><text class="gl" x="38" y="66.3">80</text><line class="grid" x1="46" y1="45.4" x2="708" y2="45.4"/><text class="gl" x="38" y="48.9">90</text><line class="grid" x1="46" y1="28.1" x2="708" y2="28.1"/><text class="gl" x="38" y="31.6">100</text><path class="fill" d="M46.0 122.6 L70.8 122.1 L95.5 122.1 L119.0 121.0 L143.1 117.4 L166.5 113.0 L189.2 110.1 L214.0 109.1 L238.8 109.1 L262.9 105.4 L285.6 100.0 L307.1 95.7 L331.1 89.5 L352.6 83.2 L381.4 79.4 L406.1 79.4 L432.2 73.2 L455.7 62.8 L482.4 61.7 L507.9 60.0 L535.3 54.6 L561.4 44.4 L582.8 40.4 L608.9 37.1 L633.0 35.6 L656.5 35.9 L681.2 38.2 L708.0 37.8 L708.0 134.0 L46.0 134.0 Z"/><path class="ideal" d="M46.0 122.6 L708.0 36.9"/><path class="terr" d="M46.0 115.6 L70.8 113.7 L95.5 111.3 L119.0 110.4 L143.1 110.3 L166.5 108.5 L189.2 104.9 L214.0 101.6 L238.8 99.5 L262.9 98.7 L285.6 98.1 L307.1 95.7 L331.1 89.3 L352.6 81.3 L381.4 77.2 L406.1 76.8 L432.2 79.1 L455.7 82.4 L482.4 85.5 L507.9 83.9 L535.3 76.0 L561.4 64.5 L582.8 53.6 L608.9 43.7 L633.0 35.0 L656.5 29.0 L681.2 27.4 L708.0 29.0"/><path class="cop" d="M46.0 122.6 L70.8 122.1 L95.5 122.1 L119.0 121.0 L143.1 117.4 L166.5 113.0 L189.2 110.1 L214.0 109.1 L238.8 109.1 L262.9 105.4 L285.6 100.0 L307.1 95.7 L331.1 89.5 L352.6 83.2 L381.4 79.4 L406.1 79.4 L432.2 73.2 L455.7 62.8 L482.4 61.7 L507.9 60.0 L535.3 54.6 L561.4 44.4 L582.8 40.4 L608.9 37.1 L633.0 35.6 L656.5 35.9 L681.2 38.2 L708.0 37.8"/><text class="gl" x="46.0" y="152" text-anchor="middle">0</text><text class="gl" x="213.3" y="152" text-anchor="middle">0.2</text><text class="gl" x="380.7" y="152" text-anchor="middle">0.5</text><text class="gl" x="548.0" y="152" text-anchor="middle">0.7</text><text class="gl" x="708" y="152" text-anchor="end">km</text></svg>
+  <div class="bands" aria-label="gradient per 100 metres"><div class="band b1" style="flex:100"><span>1.7</span></div><div class="band b2" style="flex:100"><span>4.4</span></div><div class="band b2" style="flex:100"><span>3.0</span></div><div class="band b3" style="flex:100"><span>5.4</span></div><div class="band b5" style="flex:100"><span>9.5</span></div><div class="band b1" style="flex:100"><span>2.6</span></div><div class="band b1" style="flex:100"><span>2.0</span></div><div class="band b5" style="flex:100"><span>13.6</span></div><div class="band b4" style="flex:100"><span>7.6</span></div><div class="band b1" style="flex:89"><span>-0.7</span></div></div>
+  <p class="legend"><span class="k cop"></span>Copernicus GLO-30 <span class="k terr"></span>AWS terrain
+     <span class="k ideal"></span>a true 5 % ramp · strip shows gradient per 100 m
+     · <a href="https://www.google.com/maps/dir/57.67472,11.97636/57.67457,11.97003/data=!4m2!4m1!3e1">route in Google Maps</a></p>
+</article>
+<article class="climb">
+  <header class="ch">
+    <span class="num">3</span>
+    <div>
+      <h3>Tunnlandsgatan → Dirigentgatan</h3>
+      <p class="ends">Tvärhandsgatan junction, Högsbo <span class="arrow">↗</span> Dirigentgatan, Flatås</p>
+    </div>
+    <p class="away"><b>2.1 km</b><span>from Eklanda Hage</span></p>
+  </header>
+  <dl class="stats">
+    <div><dt>Length</dt><dd>977 m</dd></div>
+    <div><dt>Gain</dt><dd>47 m</dd></div>
+    <div><dt>Average</dt><dd class="hi">4.81 %</dd></div>
+    <div><dt>Elevation</dt><dd>18→66 m</dd></div>
+    <div><dt>Pulling ≥3 %</dt><dd>84 % of it</dd></div>
+    <div><dt>Two DEMs</dt><dd>4.90 / 4.72 %</dd></div>
+  </dl>
+  <svg viewBox="0 0 720 168" class="prof" role="img" aria-label="Elevation profile: 977 metres climbing 47 metres"><line class="grid" x1="46" y1="118.0" x2="708" y2="118.0"/><text class="gl" x="38" y="121.5">20</text><line class="grid" x1="46" y1="98.3" x2="708" y2="98.3"/><text class="gl" x="38" y="101.8">30</text><line class="grid" x1="46" y1="78.6" x2="708" y2="78.6"/><text class="gl" x="38" y="82.1">40</text><line class="grid" x1="46" y1="58.8" x2="708" y2="58.8"/><text class="gl" x="38" y="62.3">50</text><line class="grid" x1="46" y1="39.1" x2="708" y2="39.1"/><text class="gl" x="38" y="42.6">60</text><line class="grid" x1="46" y1="19.3" x2="708" y2="19.3"/><text class="gl" x="38" y="22.8">70</text><path class="fill" d="M46.0 122.6 L68.2 117.3 L89.8 111.9 L112.0 111.9 L133.5 111.9 L156.4 106.6 L180.1 100.9 L202.3 98.1 L223.8 97.9 L247.4 95.9 L275.2 89.8 L302.3 82.7 L327.3 75.0 L351.6 69.3 L378.0 67.3 L404.4 65.5 L428.8 62.4 L452.4 60.8 L473.9 61.4 L498.2 60.6 L526.0 57.8 L553.1 53.3 L578.1 47.2 L605.2 41.8 L630.9 39.5 L654.5 37.9 L680.2 35.5 L708.0 30.4 L708.0 134.0 L46.0 134.0 Z"/><path class="ideal" d="M46.0 122.6 L708.0 28.5"/><path class="terr" d="M46.0 115.7 L68.2 114.7 L89.8 112.7 L112.0 110.3 L133.5 107.2 L156.4 103.6 L180.1 100.1 L202.3 96.5 L223.8 93.2 L247.4 88.6 L275.2 83.1 L302.3 77.8 L327.3 73.6 L351.6 69.7 L378.0 66.9 L404.4 65.3 L428.8 63.7 L452.4 61.6 L473.9 58.8 L498.2 55.8 L526.0 53.7 L553.1 53.1 L578.1 51.1 L605.2 47.6 L630.9 44.2 L654.5 40.3 L680.2 33.9 L708.0 27.4"/><path class="cop" d="M46.0 122.6 L68.2 117.3 L89.8 111.9 L112.0 111.9 L133.5 111.9 L156.4 106.6 L180.1 100.9 L202.3 98.1 L223.8 97.9 L247.4 95.9 L275.2 89.8 L302.3 82.7 L327.3 75.0 L351.6 69.3 L378.0 67.3 L404.4 65.5 L428.8 62.4 L452.4 60.8 L473.9 61.4 L498.2 60.6 L526.0 57.8 L553.1 53.3 L578.1 47.2 L605.2 41.8 L630.9 39.5 L654.5 37.9 L680.2 35.5 L708.0 30.4"/><text class="gl" x="46.0" y="152" text-anchor="middle">0</text><text class="gl" x="219.7" y="152" text-anchor="middle">0.2</text><text class="gl" x="393.3" y="152" text-anchor="middle">0.5</text><text class="gl" x="567.0" y="152" text-anchor="middle">0.7</text><text class="gl" x="708" y="152" text-anchor="end">km</text></svg>
+  <div class="bands" aria-label="gradient per 100 metres"><div class="band b2" style="flex:100"><span>4.0</span></div><div class="band b3" style="flex:100"><span>5.9</span></div><div class="band b2" style="flex:100"><span>4.3</span></div><div class="band b5" style="flex:100"><span>8.2</span></div><div class="band b2" style="flex:100"><span>4.3</span></div><div class="band b1" style="flex:100"><span>2.8</span></div><div class="band b1" style="flex:100"><span>2.9</span></div><div class="band b3" style="flex:100"><span>5.0</span></div><div class="band b2" style="flex:100"><span>4.4</span></div><div class="band b4" style="flex:77"><span>6.7</span></div></div>
+  <p class="legend"><span class="k cop"></span>Copernicus GLO-30 <span class="k terr"></span>AWS terrain
+     <span class="k ideal"></span>a true 5 % ramp · strip shows gradient per 100 m
+     · <a href="https://www.google.com/maps/dir/57.66812,11.93358/57.66818,11.92088/data=!4m2!4m1!3e1">route in Google Maps</a></p>
+</article>
+<article class="climb">
+  <header class="ch">
+    <span class="num">4</span>
+    <div>
+      <h3>Krokslättsgatan</h3>
+      <p class="ends">Fabriksgatan, Krokslätts Fabriker <span class="arrow">↗</span> Klintegatan / Krokslätts Storgata</p>
+    </div>
+    <p class="away"><b>3.3 km</b><span>from Eklanda Hage</span></p>
+  </header>
+  <dl class="stats">
+    <div><dt>Length</dt><dd>1000 m</dd></div>
+    <div><dt>Gain</dt><dd>52 m</dd></div>
+    <div><dt>Average</dt><dd class="hi">5.15 %</dd></div>
+    <div><dt>Elevation</dt><dd>8→59 m</dd></div>
+    <div><dt>Pulling ≥3 %</dt><dd>74 % of it</dd></div>
+    <div><dt>Two DEMs</dt><dd>5.16 / 5.13 %</dd></div>
+  </dl>
+  <svg viewBox="0 0 720 168" class="prof" role="img" aria-label="Elevation profile: 1000 metres climbing 52 metres"><line class="grid" x1="46" y1="133.6" x2="708" y2="133.6"/><text class="gl" x="38" y="137.1">0</text><line class="grid" x1="46" y1="115.6" x2="708" y2="115.6"/><text class="gl" x="38" y="119.1">10</text><line class="grid" x1="46" y1="97.5" x2="708" y2="97.5"/><text class="gl" x="38" y="101.0">20</text><line class="grid" x1="46" y1="79.5" x2="708" y2="79.5"/><text class="gl" x="38" y="83.0">30</text><line class="grid" x1="46" y1="61.5" x2="708" y2="61.5"/><text class="gl" x="38" y="65.0">40</text><line class="grid" x1="46" y1="43.5" x2="708" y2="43.5"/><text class="gl" x="38" y="47.0">50</text><line class="grid" x1="46" y1="25.4" x2="708" y2="25.4"/><text class="gl" x="38" y="28.9">60</text><path class="fill" d="M46.0 119.5 L70.5 121.0 L95.0 122.6 L116.1 122.2 L137.8 121.3 L161.0 119.7 L181.4 116.8 L202.5 112.1 L230.4 104.6 L256.9 97.2 L280.0 91.9 L301.8 89.2 L324.3 99.9 L346.7 96.4 L372.6 84.9 L397.8 73.4 L418.8 69.8 L447.4 65.6 L475.3 62.4 L496.4 61.1 L517.5 59.0 L542.0 56.4 L568.5 50.3 L591.7 45.3 L612.7 42.2 L633.8 39.1 L654.9 32.8 L678.7 28.9 L708.0 27.4 L708.0 134.0 L46.0 134.0 Z"/><path class="ideal" d="M46.0 119.5 L708.0 31.8"/><path class="terr" d="M46.0 119.0 L70.5 119.7 L95.0 119.7 L116.1 118.8 L137.8 117.4 L161.0 115.7 L181.4 113.4 L202.5 110.1 L230.4 105.1 L256.9 97.7 L280.0 89.6 L301.8 83.3 L324.3 78.2 L346.7 73.6 L372.6 68.9 L397.8 64.9 L418.8 61.3 L447.4 59.7 L475.3 60.0 L496.4 60.4 L517.5 59.3 L542.0 56.8 L568.5 53.7 L591.7 51.4 L612.7 49.6 L633.8 46.2 L654.9 40.4 L678.7 33.0 L708.0 27.8"/><path class="cop" d="M46.0 119.5 L70.5 121.0 L95.0 122.6 L116.1 122.2 L137.8 121.3 L161.0 119.7 L181.4 116.8 L202.5 112.1 L230.4 104.6 L256.9 97.2 L280.0 91.9 L301.8 89.2 L324.3 99.9 L346.7 96.4 L372.6 84.9 L397.8 73.4 L418.8 69.8 L447.4 65.6 L475.3 62.4 L496.4 61.1 L517.5 59.0 L542.0 56.4 L568.5 50.3 L591.7 45.3 L612.7 42.2 L633.8 39.1 L654.9 32.8 L678.7 28.9 L708.0 27.4"/><text class="gl" x="46.0" y="152" text-anchor="middle">0</text><text class="gl" x="216.1" y="152" text-anchor="middle">0.2</text><text class="gl" x="386.2" y="152" text-anchor="middle">0.5</text><text class="gl" x="556.3" y="152" text-anchor="middle">0.7</text><text class="gl" x="708" y="152" text-anchor="end">km</text></svg>
+  <div class="bands" aria-label="gradient per 100 metres"><div class="band b1" style="flex:100"><span>-0.7</span></div><div class="band b2" style="flex:100"><span>3.4</span></div><div class="band b5" style="flex:100"><span>9.2</span></div><div class="band b3" style="flex:100"><span>4.7</span></div><div class="band b5" style="flex:100"><span>10.5</span></div><div class="band b3" style="flex:100"><span>4.9</span></div><div class="band b1" style="flex:100"><span>2.0</span></div><div class="band b3" style="flex:100"><span>5.6</span></div><div class="band b4" style="flex:100"><span>7.3</span></div><div class="band b3" style="flex:100"><span>4.8</span></div></div>
+  <p class="legend"><span class="k cop"></span>Copernicus GLO-30 <span class="k terr"></span>AWS terrain
+     <span class="k ideal"></span>a true 5 % ramp · strip shows gradient per 100 m
+     · <a href="https://www.google.com/maps/dir/57.67449,12.00605/57.67301,11.99272/data=!4m2!4m1!3e1">route in Google Maps</a></p>
+</article>
+<article class="climb">
+  <header class="ch">
+    <span class="num">5</span>
+    <div>
+      <h3>Askims Svedjeväg → Högabergsvägen</h3>
+      <p class="ends">Askims Granstig <span class="arrow">↗</span> Hällstigen, Hovås</p>
+    </div>
+    <p class="away"><b>3.2 km</b><span>from Eklanda Hage</span></p>
+  </header>
+  <dl class="stats">
+    <div><dt>Length</dt><dd>939 m</dd></div>
+    <div><dt>Gain</dt><dd>45 m</dd></div>
+    <div><dt>Average</dt><dd class="hi">4.83 %</dd></div>
+    <div><dt>Elevation</dt><dd>28→74 m</dd></div>
+    <div><dt>Pulling ≥3 %</dt><dd>92 % of it</dd></div>
+    <div><dt>Two DEMs</dt><dd>4.82 / 4.83 %</dd></div>
+  </dl>
+  <svg viewBox="0 0 720 168" class="prof" role="img" aria-label="Elevation profile: 939 metres climbing 45 metres"><line class="grid" x1="46" y1="119.3" x2="708" y2="119.3"/><text class="gl" x="38" y="122.8">30</text><line class="grid" x1="46" y1="98.8" x2="708" y2="98.8"/><text class="gl" x="38" y="102.3">40</text><line class="grid" x1="46" y1="78.4" x2="708" y2="78.4"/><text class="gl" x="38" y="81.9">50</text><line class="grid" x1="46" y1="57.9" x2="708" y2="57.9"/><text class="gl" x="38" y="61.4">60</text><line class="grid" x1="46" y1="37.4" x2="708" y2="37.4"/><text class="gl" x="38" y="40.9">70</text><line class="grid" x1="46" y1="17.0" x2="708" y2="17.0"/><text class="gl" x="38" y="20.5">80</text><path class="fill" d="M46.0 122.6 L75.6 120.7 L103.8 115.8 L129.9 111.7 L154.6 104.4 L177.1 97.8 L199.7 94.5 L231.4 92.3 L260.3 89.8 L284.3 87.8 L307.6 85.1 L332.2 81.2 L354.8 78.6 L375.9 76.9 L393.6 76.9 L421.1 77.1 L443.6 74.5 L469.0 68.3 L493.0 61.2 L522.6 56.9 L549.4 55.3 L577.6 52.6 L607.2 47.5 L634.7 43.4 L665.0 39.3 L688.3 34.6 L708.0 29.9 L708.0 134.0 L46.0 134.0 Z"/><path class="ideal" d="M46.0 122.6 L708.0 26.5"/><path class="terr" d="M46.0 120.1 L75.6 117.5 L103.8 112.3 L129.9 106.6 L154.6 102.5 L177.1 98.8 L199.7 95.0 L231.4 93.1 L260.3 92.7 L284.3 91.1 L307.6 86.6 L332.2 80.6 L354.8 77.1 L375.9 75.7 L393.6 74.7 L421.1 73.1 L443.6 70.6 L469.0 67.5 L493.0 62.8 L522.6 58.5 L549.4 54.4 L577.6 49.9 L607.2 44.2 L634.7 38.3 L665.0 32.9 L688.3 29.3 L708.0 27.4"/><path class="cop" d="M46.0 122.6 L75.6 120.7 L103.8 115.8 L129.9 111.7 L154.6 104.4 L177.1 97.8 L199.7 94.5 L231.4 92.3 L260.3 89.8 L284.3 87.8 L307.6 85.1 L332.2 81.2 L354.8 78.6 L375.9 76.9 L393.6 76.9 L421.1 77.1 L443.6 74.5 L469.0 68.3 L493.0 61.2 L522.6 56.9 L549.4 55.3 L577.6 52.6 L607.2 47.5 L634.7 43.4 L665.0 39.3 L688.3 34.6 L708.0 29.9"/><text class="gl" x="46.0" y="152" text-anchor="middle">0</text><text class="gl" x="222.3" y="152" text-anchor="middle">0.2</text><text class="gl" x="398.5" y="152" text-anchor="middle">0.5</text><text class="gl" x="574.8" y="152" text-anchor="middle">0.7</text><text class="gl" x="708" y="152" text-anchor="end">km</text></svg>
+  <div class="bands" aria-label="gradient per 100 metres"><div class="band b3" style="flex:100"><span>4.6</span></div><div class="band b4" style="flex:100"><span>7.8</span></div><div class="band b1" style="flex:100"><span>2.0</span></div><div class="band b3" style="flex:100"><span>5.0</span></div><div class="band b1" style="flex:100"><span>2.6</span></div><div class="band b3" style="flex:100"><span>4.5</span></div><div class="band b3" style="flex:100"><span>5.5</span></div><div class="band b3" style="flex:100"><span>5.3</span></div><div class="band b3" style="flex:139"><span>5.8</span></div></div>
+  <p class="legend"><span class="k cop"></span>Copernicus GLO-30 <span class="k terr"></span>AWS terrain
+     <span class="k ideal"></span>a true 5 % ramp · strip shows gradient per 100 m
+     · <a href="https://www.google.com/maps/dir/57.62923,11.94212/57.62790,11.95150/data=!4m2!4m1!3e1">route in Google Maps</a></p>
+</article>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>How this was measured</h2>
+    <div class="method">
+      <div><h4>Roads</h4><p>Overture Maps transportation segments (OpenStreetMap-derived),
+        July 2026 release — 13,075 tarmac segments within 4 km, resampled every 25 m.</p></div>
+      <div><h4>Elevation</h4><p>AWS Terrain Tiles for the search, Copernicus GLO-30 as an
+        independent check. Both are surface models: trees and buildings beside the road add
+        noise, so profiles are smoothed over 60 m.</p></div>
+      <div><h4>Search</h4><p>A depth-first walk uphill from every junction, dropping any branch
+        that gives back more than 6 m below its high point, then trimming each corridor to the
+        stretch that best matches 1 km at 5 %.</p></div>
+      <div><h4>What to trust</h4><p>Averages over a kilometre are solid to about ±0.3 points.
+        Individual 100 m readings in the strip are not — treat the bands as shape, not gospel.</p></div>
+    </div>
+  </section>
+</div>

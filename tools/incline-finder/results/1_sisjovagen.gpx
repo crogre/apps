@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="incline-finder" xmlns="http://www.topografix.com/GPX/1/1">
+<trk>
+<name>Sisjövägen — 995 m @ 5.0%</name>
+<trkseg>
+<trkpt lat="57.638587" lon="11.951614"><ele>14.1</ele></trkpt>
+<trkpt lat="57.638679" lon="11.951748"><ele>14.1</ele></trkpt>
+<trkpt lat="57.638383" lon="11.952089"><ele>17.1</ele></trkpt>
+<trkpt lat="57.638023" lon="11.952456"><ele>22.7</ele></trkpt>
+<trkpt lat="57.637721" lon="11.952783"><ele>26.6</ele></trkpt>
+<trkpt lat="57.637432" lon="11.953124"><ele>34.5</ele></trkpt>
+<trkpt lat="57.637195" lon="11.953421"><ele>34.9</ele></trkpt>
+<trkpt lat="57.637000" lon="11.953700"><ele>36.0</ele></trkpt>
+<trkpt lat="57.636804" lon="11.954010"><ele>39.0</ele></trkpt>
+<trkpt lat="57.636580" lon="11.954492"><ele>38.4</ele></trkpt>
+<trkpt lat="57.636434" lon="11.954918"><ele>39.1</ele></trkpt>
+<trkpt lat="57.636348" lon="11.955230"><ele>40.4</ele></trkpt>
+<trkpt lat="57.636234" lon="11.955728"><ele>39.7</ele></trkpt>
+<trkpt lat="57.636163" lon="11.956226"><ele>40.4</ele></trkpt>
+<trkpt lat="57.636124" lon="11.956944"><ele>44.6</ele></trkpt>
+<trkpt lat="57.636113" lon="11.957671"><ele>48.7</ele></trkpt>
+<trkpt lat="57.636100" lon="11.958317"><ele>49.8</ele></trkpt>
+<trkpt lat="57.636083" lon="11.958814"><ele>48.7</ele></trkpt>
+<trkpt lat="57.636043" lon="11.959353"><ele>48.0</ele></trkpt>
+<trkpt lat="57.635961" lon="11.959789"><ele>50.3</ele></trkpt>
+<trkpt lat="57.635845" lon="11.960175"><ele>50.6</ele></trkpt>
+<trkpt lat="57.635611" lon="11.960679"><ele>49.6</ele></trkpt>
+<trkpt lat="57.635421" lon="11.960944"><ele>49.6</ele></trkpt>
+<trkpt lat="57.635352" lon="11.961027"><ele>49.8</ele></trkpt>
+<trkpt lat="57.634573" lon="11.961620"><ele>57.4</ele></trkpt>
+<trkpt lat="57.634337" lon="11.961794"><ele>57.4</ele></trkpt>
+<trkpt lat="57.634068" lon="11.962040"><ele>57.9</ele></trkpt>
+<trkpt lat="57.633857" lon="11.962256"><ele>61.7</ele></trkpt>
+<trkpt lat="57.633635" lon="11.962471"><ele>63.9</ele></trkpt>
+<trkpt lat="57.633192" lon="11.962904"><ele>65.8</ele></trkpt>
+</trkseg>
+</trk>
+</gpx>
