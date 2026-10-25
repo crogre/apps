@@ -33,15 +33,24 @@ struct DocumentEditorView: View {
     }
 
     var body: some View {
-        List {
-            titleField
-            ForEach(document.orderedBlocks) { block in
-                row(for: block)
-            }
-            .onMove { commands.move(fromOffsets: $0, toOffset: $1) }
-            .onDelete(perform: deleteBlocks)
+        ScrollViewReader { proxy in
+            List {
+                titleField
+                ForEach(document.orderedBlocks) { block in
+                    row(for: block)
+                        .id(block.id)
+                }
+                .onMove { commands.move(fromOffsets: $0, toOffset: $1) }
+                .onDelete(perform: deleteBlocks)
 
-            tapToAppendSpacer
+                tapToAppendSpacer
+            }
+            // The list only scrolls far enough to show the caret, which leaves a to-do's
+            // chips under the keyboard. Bring the whole row into view instead.
+            .onChange(of: focusedBlockID) { _, id in reveal(id, with: proxy) }
+            .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidShowNotification)) { _ in
+                reveal(focusedBlockID, with: proxy)
+            }
         }
         .listStyle(.plain)
         .environment(\.defaultMinListRowHeight, 0)
@@ -213,6 +222,14 @@ struct DocumentEditorView: View {
     private var focusedBlock: Block? {
         guard let focusedBlockID else { return nil }
         return document.orderedBlocks.first { $0.id == focusedBlockID }
+    }
+
+    private func reveal(_ id: UUID?, with proxy: ScrollViewProxy) {
+        guard let id else { return }
+        // Wait for the row to exist and the keyboard inset to land before scrolling.
+        DispatchQueue.main.async {
+            withAnimation { proxy.scrollTo(id) }
+        }
     }
 
     private func focusFirstBlock() {

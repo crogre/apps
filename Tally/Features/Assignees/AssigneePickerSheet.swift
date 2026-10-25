@@ -20,34 +20,39 @@ struct AssigneePickerSheet: View {
     @State private var selectedIDs: [UUID] = []
     @State private var searchText = ""
     @State private var hasPrimed = false
+    /// Who sits in the top section. Fixed when the sheet opens so ticking someone never
+    /// moves rows around under your finger.
+    @State private var pinnedIDs: [UUID] = []
 
     var body: some View {
         NavigationStack {
             List {
-                if !selectedPeople.isEmpty {
-                    Section("Assigned") {
-                        ForEach(selectedPeople) { person in
-                            personRow(person, isSelected: true)
+                if !pinnedPeople.isEmpty {
+                    Section(initialSelection.isEmpty ? "Last used in this note" : "Assigned") {
+                        ForEach(pinnedPeople) { person in
+                            personRow(person, isSelected: selectedIDs.contains(person.id))
                         }
                     }
                 }
 
-                Section(selectedPeople.isEmpty ? "People" : "Everyone else") {
-                    if let name = creatableName {
-                        Button {
-                            create(named: name)
-                        } label: {
-                            Label("Create “\(name)”", systemImage: "person.badge.plus")
+                if creatableName != nil || !otherPeople.isEmpty || people.isEmpty {
+                    Section(pinnedIDs.isEmpty ? "People" : "Everyone else") {
+                        if let name = creatableName {
+                            Button {
+                                create(named: name)
+                            } label: {
+                                Label("Create “\(name)”", systemImage: "person.badge.plus")
+                            }
                         }
-                    }
 
-                    ForEach(unselectedPeople) { person in
-                        personRow(person, isSelected: false)
-                    }
+                        ForEach(otherPeople) { person in
+                            personRow(person, isSelected: selectedIDs.contains(person.id))
+                        }
 
-                    if unselectedPeople.isEmpty && creatableName == nil && selectedPeople.isEmpty {
-                        Text("Type a name to add the first person.")
-                            .foregroundStyle(.secondary)
+                        if people.isEmpty && creatableName == nil {
+                            Text("Type a name to add the first person.")
+                                .foregroundStyle(.secondary)
+                        }
                     }
                 }
             }
@@ -108,8 +113,14 @@ struct AssigneePickerSheet: View {
         return people.filter { $0.name.localizedCaseInsensitiveContains(query) }
     }
 
-    private var unselectedPeople: [Person] {
-        matchingPeople.filter { !selectedIDs.contains($0.id) }
+    private var pinnedPeople: [Person] {
+        let matching = Set(matchingPeople.map(\.id))
+        return pinnedIDs.compactMap { id in people.first { $0.id == id } }
+            .filter { matching.contains($0.id) }
+    }
+
+    private var otherPeople: [Person] {
+        matchingPeople.filter { !pinnedIDs.contains($0.id) }
     }
 
     /// The typed name, when it is not already somebody's name.
@@ -126,6 +137,7 @@ struct AssigneePickerSheet: View {
         hasPrimed = true
         let source = initialSelection.isEmpty ? fallbackSelection : initialSelection
         selectedIDs = source.map(\.id)
+        pinnedIDs = selectedIDs
     }
 
     private func toggle(_ person: Person) {
