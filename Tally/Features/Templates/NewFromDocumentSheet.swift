@@ -134,6 +134,11 @@ struct NewFromDocumentSheet: View {
             isTemplate: pinAsTemplate,
             templateSourceID: source.id
         )
+        // A copy keeps the template's own people order. Anyone swapped in is not in it and
+        // falls back to the global order.
+        if keepAssignees {
+            document.peopleOrderRaw = source.peopleOrderRaw
+        }
 
         dismiss()
         onCreated(document)

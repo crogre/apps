@@ -13,6 +13,9 @@ final class Person {
     var colorSeed: Int = 0
     /// A colour picked outside the palette, as `#RRGGBB`. Wins over `colorSeed` when set.
     var customColorHex: String? = nil
+    /// Position in the global people order, set by dragging in People. Ties — everyone
+    /// starts at 0 — fall back to creation order. See `PeopleOrder`.
+    var sortIndex: Int = 0
     var createdAt: Date = Date.now
     /// Bumped whenever the person is assigned to something. Orders the picker so the
     /// people you actually use float to the top.

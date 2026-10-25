@@ -6,7 +6,10 @@ struct PeopleManagerView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
 
-    @Query(sort: \Person.lastUsedAt, order: .reverse) private var people: [Person]
+    @Query private var allPeople: [Person]
+
+    /// Everyone in the global order, which this screen is where you set.
+    private var people: [Person] { PeopleOrder.global(allPeople) }
 
     @State private var newName = ""
     @State private var personPendingDeletion: Person?
@@ -33,11 +36,19 @@ struct PeopleManagerView: View {
                 ForEach(people) { person in
                     row(for: person)
                 }
+                .onMove(perform: movePeople)
+            } footer: {
+                if people.count > 1 {
+                    Text("Drag to set the order people appear in on every item. A note can override it from its ⋯ menu.")
+                }
             }
         }
         .navigationTitle("People")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                if people.count > 1 { EditButton() }
+            }
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Done") { dismiss() }
             }
@@ -119,6 +130,12 @@ struct PeopleManagerView: View {
             }
             .tint(.orange)
         }
+    }
+
+    private func movePeople(from source: IndexSet, to destination: Int) {
+        var reordered = people
+        reordered.move(fromOffsets: source, toOffset: destination)
+        PeopleOrder.setGlobal(reordered)
     }
 
     private func addPerson() {

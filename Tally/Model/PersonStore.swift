@@ -34,6 +34,8 @@ struct PersonStore {
         guard !trimmed.isEmpty else { return nil }
         if let existing = person(named: trimmed) { return existing }
         let person = Person(name: trimmed)
+        // New people join the end of the global order rather than tying with everyone.
+        person.sortIndex = PeopleOrder.nextGlobalIndex(after: allPeople())
         context.insert(person)
         return person
     }

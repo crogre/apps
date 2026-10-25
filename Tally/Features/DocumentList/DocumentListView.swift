@@ -233,6 +233,8 @@ struct DocumentListView: View {
 struct DocumentActionsMenu: View {
     let document: Document
     var onUseAsTemplate: () -> Void
+    /// Only offered inside the note, where the sheet has the note behind it to rearrange.
+    var onOrderPeople: (() -> Void)? = nil
     var onDelete: () -> Void
 
     var body: some View {
@@ -240,6 +242,12 @@ struct DocumentActionsMenu: View {
             onUseAsTemplate()
         } label: {
             Label("New from this…", systemImage: "doc.on.doc")
+        }
+
+        if let onOrderPeople, document.distinctPeople.count > 1 {
+            Button(action: onOrderPeople) {
+                Label("Order of people…", systemImage: "arrow.up.arrow.down")
+            }
         }
 
         Button {

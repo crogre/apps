@@ -14,6 +14,9 @@ final class Document {
     /// The document this one was cloned from, kept as a plain identifier rather than a
     /// relationship so deleting the original never disturbs its descendants.
     var templateSourceID: UUID?
+    /// This note's own order of people, as comma-separated person ids. Nil follows the
+    /// global order. Stored as a string to stay a plain attribute for CloudKit.
+    var peopleOrderRaw: String?
 
     @Relationship(deleteRule: .cascade, inverse: \Block.document)
     var blocks: [Block]? = []
@@ -58,8 +61,8 @@ final class Document {
         return trimmed.isEmpty ? "Untitled" : trimmed
     }
 
-    /// Everyone mentioned anywhere in this document, in first-appearance order. Drives the
-    /// remap list when using the document as a template.
+    /// Everyone mentioned anywhere in this document, in this note's people order. Drives
+    /// the avatar stack and the remap list when using the document as a template.
     var distinctPeople: [Person] {
         var seen = Set<UUID>()
         var result: [Person] = []
@@ -68,7 +71,18 @@ final class Document {
                 result.append(person)
             }
         }
-        return result
+        return PeopleOrder.sorted(result, in: self)
+    }
+
+    /// This note's own order of people, or nil when it follows the global order.
+    var peopleOrderOverride: [UUID]? {
+        get {
+            guard let peopleOrderRaw else { return nil }
+            return peopleOrderRaw.split(separator: ",").compactMap { UUID(uuidString: String($0)) }
+        }
+        set {
+            peopleOrderRaw = newValue?.map(\.uuidString).joined(separator: ",")
+        }
     }
 
     func touch(_ date: Date = .now) {

@@ -70,6 +70,8 @@ struct DocumentEditorView: View {
                 CompleterSheet(block: block)
             case .template:
                 NewFromDocumentSheet(source: document) { _ in dismiss() }
+            case .peopleOrder:
+                NotePeopleOrderSheet(document: document)
             }
         }
         .onAppear(perform: primeStickyAssignees)
@@ -79,12 +81,14 @@ struct DocumentEditorView: View {
         case assignees(Block)
         case completer(Block)
         case template
+        case peopleOrder
 
         var id: String {
             switch self {
             case let .assignees(block): return "assignees-\(block.id)"
             case let .completer(block): return "completer-\(block.id)"
             case .template: return "template"
+            case .peopleOrder: return "peopleOrder"
             }
         }
     }
@@ -142,6 +146,7 @@ struct DocumentEditorView: View {
                 DocumentActionsMenu(
                     document: document,
                     onUseAsTemplate: { present(.template) },
+                    onOrderPeople: { present(.peopleOrder) },
                     onDelete: {
                         context.delete(document)
                         dismiss()

@@ -42,9 +42,10 @@ final class Block {
         set { kindRaw = newValue.rawValue }
     }
 
-    /// Assignments in their stored order.
+    /// Assignments in people order — the note's own if it has one, else the global one —
+    /// so chips, pie slices and "Who did it?" line up the same way on every item.
     var orderedAssignments: [Assignment] {
-        (assignments ?? []).sorted { $0.order < $1.order }
+        PeopleOrder.sorted(assignments ?? [], in: document)
     }
 
     var people: [Person] {
