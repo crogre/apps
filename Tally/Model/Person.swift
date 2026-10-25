@@ -11,6 +11,8 @@ final class Person {
     var name: String = ""
     /// Index into `PersonPalette`, so a person keeps the same colour everywhere.
     var colorSeed: Int = 0
+    /// A colour picked outside the palette, as `#RRGGBB`. Wins over `colorSeed` when set.
+    var customColorHex: String? = nil
     var createdAt: Date = Date.now
     /// Bumped whenever the person is assigned to something. Orders the picker so the
     /// people you actually use float to the top.

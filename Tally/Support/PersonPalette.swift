@@ -31,8 +31,31 @@ enum PersonPalette {
     static func color(seed: Int) -> Color {
         colors[((seed % colors.count) + colors.count) % colors.count]
     }
+
+    /// `#RRGGBB` for a colour, so a custom pick can be stored as a plain string.
+    static func hex(for color: Color) -> String {
+        var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
+        UIColor(color).getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        let channel = { (value: CGFloat) in Int((min(max(value, 0), 1) * 255).rounded()) }
+        return String(format: "#%02X%02X%02X", channel(red), channel(green), channel(blue))
+    }
+
+    static func color(hex: String) -> Color? {
+        let digits = hex.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "#", with: "")
+        guard digits.count == 6, let value = Int(digits, radix: 16) else { return nil }
+        return Color(
+            red: Double((value >> 16) & 0xFF) / 255,
+            green: Double((value >> 8) & 0xFF) / 255,
+            blue: Double(value & 0xFF) / 255
+        )
+    }
 }
 
 extension Person {
-    var color: Color { PersonPalette.color(seed: colorSeed) }
+    var color: Color {
+        if let customColorHex, let custom = PersonPalette.color(hex: customColorHex) {
+            return custom
+        }
+        return PersonPalette.color(seed: colorSeed)
+    }
 }

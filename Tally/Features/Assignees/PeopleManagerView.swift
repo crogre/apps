@@ -91,24 +91,20 @@ struct PeopleManagerView: View {
     }
 
     private func row(for person: Person) -> some View {
-        HStack(spacing: 10) {
-            PersonAvatar(person: person, size: 30)
-            VStack(alignment: .leading, spacing: 1) {
-                Text(verbatim: person.name)
-                Text(subtitle(for: person))
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+        NavigationLink {
+            PersonEditorView(person: person)
+        } label: {
+            HStack(spacing: 10) {
+                PersonAvatar(person: person, size: 30)
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(verbatim: person.name)
+                    Text(subtitle(for: person))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
-            Spacer()
-            Button {
-                person.colorSeed = (person.colorSeed + 1) % PersonPalette.colors.count
-            } label: {
-                Image(systemName: "paintpalette")
-                    .foregroundStyle(.secondary)
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel("Change colour for \(person.name)")
         }
+        .accessibilityHint("Change name and colour")
         .swipeActions(edge: .trailing) {
             Button(role: .destructive) {
                 personPendingDeletion = person
