@@ -69,11 +69,17 @@ struct BlockRow: View {
         switch block.kind {
         case .todo:
             Button(action: onTapCheckbox) {
-                Image(systemName: block.completion.symbolName)
-                    .font(.system(size: 20))
-                    .foregroundStyle(block.completion.isComplete ? Color.accentColor : .secondary)
-                    .contentShape(Rectangle())
-                    .frame(width: 26, height: 26)
+                Group {
+                    if block.orderedAssignments.isEmpty {
+                        Image(systemName: block.completion.symbolName)
+                            .font(.system(size: 20))
+                            .foregroundStyle(block.completion.isComplete ? Color.accentColor : .secondary)
+                    } else {
+                        AssigneePieCheckbox(assignments: block.orderedAssignments)
+                    }
+                }
+                .frame(width: 26, height: 26)
+                .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
             .accessibilityLabel(accessibilityCheckboxLabel)
