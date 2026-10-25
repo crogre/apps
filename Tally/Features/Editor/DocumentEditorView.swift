@@ -14,6 +14,10 @@ struct DocumentEditorView: View {
     /// One piece of state for every sheet: stacking several `.sheet` modifiers on the same
     /// view is a well-known way to end up with one of them silently never presenting.
     @State private var sheet: EditorSheet?
+    /// The line that had the keyboard when a sheet opened. The editor lets go of the
+    /// keyboard while a sheet is up — otherwise it covers the sheet and keeps typing into
+    /// the note — and hands it back here once the sheet closes.
+    @State private var focusAfterSheet: UUID?
 
     /// The assignees most recently chosen in this note. New todos pick them up so a
     /// packing list where every item goes to both kids does not mean answering the same
@@ -44,7 +48,7 @@ struct DocumentEditorView: View {
         .navigationTitle(document.displayTitle)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar { toolbar }
-        .sheet(item: $sheet) { destination in
+        .sheet(item: $sheet, onDismiss: restoreFocusAfterSheet) { destination in
             switch destination {
             case let .assignees(block):
                 AssigneePickerSheet(
@@ -99,7 +103,7 @@ struct DocumentEditorView: View {
             onInsertMultiline: { text, offset in handleMultiline(text, on: block, at: offset) },
             onTextChange: { text in applyTypingShortcut(to: block, text: text) },
             onTapCheckbox: { handleCheckboxTap(on: block) },
-            onEditAssignees: { sheet = .assignees(block) }
+            onEditAssignees: { present(.assignees(block)) }
         )
     }
 
@@ -128,7 +132,7 @@ struct DocumentEditorView: View {
             Menu {
                 DocumentActionsMenu(
                     document: document,
-                    onUseAsTemplate: { sheet = .template },
+                    onUseAsTemplate: { present(.template) },
                     onDelete: {
                         context.delete(document)
                         dismiss()
@@ -194,7 +198,7 @@ struct DocumentEditorView: View {
         Spacer()
 
         Button {
-            sheet = .assignees(block)
+            present(.assignees(block))
         } label: {
             Image(systemName: "person.badge.plus")
         }
@@ -295,7 +299,7 @@ struct DocumentEditorView: View {
     private func handleCheckboxTap(on block: Block) {
         if block.needsCompleterPrompt {
             // More than one person is on the item, so "who finished it?" is a real question.
-            sheet = .completer(block)
+            present(.completer(block))
             return
         }
 
@@ -316,7 +320,9 @@ struct DocumentEditorView: View {
         stickyAssignees = people
 
         // The empty line created just before the sheet opened should inherit the answer too.
-        if let focused = focusedBlock,
+        // It gave up the keyboard for the sheet, so it is the one waiting in `focusAfterSheet`.
+        let pendingID = focusAfterSheet ?? focusedBlockID
+        if let focused = document.orderedBlocks.first(where: { $0.id == pendingID }),
            focused.id != block.id,
            focused.kind == .todo,
            focused.orderedAssignments.isEmpty {
@@ -344,7 +350,30 @@ struct DocumentEditorView: View {
             break
         }
 
-        sheet = .assignees(block)
+        present(.assignees(block))
+    }
+
+    // MARK: - Sheets
+
+    private func present(_ destination: EditorSheet) {
+        if focusedBlockID != nil {
+            focusAfterSheet = focusedBlockID
+            focusedBlockID = nil
+            // Resign now rather than on the next update: UIKit gives the keyboard back to
+            // whatever held it when the sheet was presented, which would be the wrong line.
+            UIApplication.shared.sendAction(
+                #selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil
+            )
+        }
+        sheet = destination
+    }
+
+    private func restoreFocusAfterSheet() {
+        guard let id = focusAfterSheet else { return }
+        focusAfterSheet = nil
+        if document.orderedBlocks.contains(where: { $0.id == id }) {
+            focusedBlockID = id
+        }
     }
 
     /// Opening a note that already has assignees should not start from a blank slate — the
